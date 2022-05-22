@@ -3,7 +3,6 @@ import Product from "./../../components/product/Product.svelte"
 
 </script>
 
-<h1>Welcome to Techno Synths</h1>
-<h2>wooooorld</h2>
+<h1>Welcome to Synth Shop</h1>
 <Product/>
 

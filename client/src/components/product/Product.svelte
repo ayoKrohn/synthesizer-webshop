@@ -1,18 +1,20 @@
 <script>
 import { onMount } from "svelte";
-import { synthURL } from "../../store/productData.js";
+import { synthURL, cartItems, amountOfItems } from "../../store/productData.js";
 
 export let products = [];
 
 onMount(async () => {
-    const res = await fetch(`http://localhost:3000/api/synths`);
+    const res = await fetch(synthURL);
     const { data: productArray } = await res.json();
     products = productArray;
 });
 
-function addToCart(){
 
-}
+const addToCart = (product) => {
+        cartItems.update(items => [...items, product]);
+        }
+ 
 
 </script>
 
@@ -22,7 +24,7 @@ function addToCart(){
         <td>{product.productName}</td>
         <td>Price: {product.price}</td>
         <td>{product.description}</td>
-        <td><button class="addToCart" on:click={addToCart}> Buy </button></td>
+        <td><button class="addToCart" on:click={() => addToCart(product)}> Buy </button></td>
     </tr>
     {/each}
 </div>
