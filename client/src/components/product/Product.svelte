@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { synthURL, cartItems, amountOfItems } from "../../store/productData.js";
+    import { synthURL, cartItems, amountOfItems } from "../../store/store.js";
     
     export let products = [];
     

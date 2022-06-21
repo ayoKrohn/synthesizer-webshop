@@ -10,7 +10,7 @@ if (deleteMode) {
 // CUSTOMERS
 db.exec(`CREATE TABLE IF NOT EXISTS customers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username VARCHAR(40), email VARCHAR(40), password VARCHAR(20) 
+    email VARCHAR(40), password VARCHAR(20) 
 );`);
 
 // SYNTHS
@@ -22,9 +22,9 @@ db.exec(`CREATE TABLE IF NOT EXISTS synths (
 
 // Seed my database
 if (deleteMode) {
-    db.run(`INSERT INTO customers (username, email, password) VALUES ('Molly', 'molle@mail.dk', '1234')`);
-    db.run(`INSERT INTO customers (username, email, password) VALUES ('Rikke', 'rikkep@mail.dk', 'musse89')`);
-    db.run(`INSERT INTO customers (username, email, password) VALUES ('Bigdaddy', 'straffer@mail.dk', 'idiot')`);
+    db.run(`INSERT INTO customers (email, password) VALUES ('molle@mail.dk', '1234')`);
+    db.run(`INSERT INTO customers (email, password) VALUES ('rikkep@mail.dk', 'musse89')`);
+    db.run(`INSERT INTO customers (email, password) VALUES ('ayokrohn@gmail.com', 'maah')`);
 
     db.run(`INSERT INTO synths (productName, price, description) VALUES ('Moog Matriarch', 13.999, 'Analogue sound generation with the classic Moog sound')`);
     db.run(`INSERT INTO synths (productName, price, description) VALUES ('Behringer DeepMind 12', 5.599, '4 FX engines powered by tc electronic and Klark Teknik')`);

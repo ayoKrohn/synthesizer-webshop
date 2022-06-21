@@ -1,5 +1,5 @@
 <script>
-    import {cartItems, amountOfItems} from "../../store/productData.js";
+    import {cartItems, amountOfItems} from "../../store/store.js";
    
    
 </script>

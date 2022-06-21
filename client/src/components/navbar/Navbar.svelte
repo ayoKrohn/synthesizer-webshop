@@ -1,5 +1,6 @@
 <script>
 	import { Router, Link, Route } from "svelte-navigator";
+	import PrivateRoute from "../../PrivateRoute.svelte";
 	import Home from "../../pages/home/Home.svelte";
 	import Synths from "../../pages/synths/Synths.svelte";
 	import About from "../../pages/about/About.svelte";
@@ -13,16 +14,16 @@
 	<nav>
 		<Link to="/">Home</Link>
         <Link to="/synths">Synths</Link> 
-		<Link to="/about">About</Link>
 		<Link to="/login">Login</Link>
+		<Link to="/profile">Profile</Link>
 		<Link to="/cart"><img class="cart" src="images/shopping-cart.png" alt="Cart" /></Link>
 	</nav>
 	<div>
 		<Route path="/" component={Home}></Route>
         <Route path="/synths" component={Synths}></Route>
-		<Route path="/about" component={About}></Route>
 		<Route path="/login" component={Login}></Route>
-		<Route path="/cart" component={ShoppingCart}></Route> 
+		<Route path="/cart" component={ShoppingCart}></Route>
+		<PrivateRoute path="/profile" let:location></PrivateRoute> 
 	</div>	
 </Router>
 

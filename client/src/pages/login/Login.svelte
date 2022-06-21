@@ -1,68 +1,65 @@
 <script>
-    import { navigate } from "svelte-navigator";
-    import { loginURL, signupURL } from "../../store/productData.js";
-    import { toast } from "@zerodevx/svelte-toast";
+  import { useNavigate, useLocation } from "svelte-navigator";
+  import { signupURL, fetchUser, makeOptions , loggedInUser} from "../../store/store.js";
+  import { toast } from "@zerodevx/svelte-toast";
   
-    let user = {};
-    let newUser = {}; 
-    let errMsg = "";
+  const navigate = useNavigate();
+  const location = useLocation();
   
-    const login = async () => {
-      const res = await fetch(loginURL, {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(user),
-      });
+  let userData = {};
+  let user;
+  let newUser = {};
   
-      errMsg = res.text();
-      if (res.status === 200) {
-        toast.push("YES! Your credentials were approved for login");
-        navigate("/", { replace: true });
-      } else {
-        toast.push("OBS! You credentials were not correct, try again!", {
-          theme: {
-            "--toastBackground": "#F56565",
-            "--toastBarBackground": "#C53030",
-          },
-        });
-      }  
-    };
-  
-    const signup = async () => {
-      const res = await fetch(signupURL, {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(newUser),
-      });
-      
-      //toastr.success('Have fun storming the castle!', 'Miracle Max Says')
-    };
-  
-  </script>
-  
-  <div class="login">
-  <h1>Login</h1>
-  <label for="email">Email</label>
-  <input placeholder="Email" name="email"  bind:value={user.email}>
-  
-  <label for="password">Password</label>
-  <input type="password" placeholder="password" name="password" bind:value={user.password}>
-  <button type="submit" on:click={login}>Login</button>
-  </div>
-  
-  <h3> or </h3>
-  
-  <div class="signup">
-  <h1>Signup</h1>
-  <label for="email">Email</label>
-  <input placeholder="Email" name="email" bind:value={newUser.email}>
-      
-  <label for="password">Password</label>
-  <input type="password" placeholder="password" name="password" bind:value={newUser.password}>
-  <button type="submit" on:click={signup}>Sign Up</button>
-  </div>
-  
+  function handleSubmit() {
+    user = fetchUser(userData);
+    console.log(user);
+    const from = ($location.state && $location.state.from) || "/";
+        navigate("/profile", from, { replace: true });
+    
+  }
+
+  async function handleLogout() {
+    const options = makeOptions("POST", userData);
+    await fetch("http://localhost:3000/api/users/logout", options);
+        const from = ($location.state && $location.state.from) || "/";
+        navigate("/", from, { replace: true });  
+    }
+     
+  async function signup() {
+    const res = await fetch(signupURL, {
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(newUser),
+    });
+    
+    //toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+  };
+</script>
+
+<div class="login">
+<h1>Login</h1>
+<label for="email">Email</label>
+<input placeholder="Email" name="email"  bind:value={userData.email}>
+
+<label for="password">Password</label>
+<input type="password" placeholder="password" name="password" bind:value={userData.password}>
+<button type="submit" on:click={handleSubmit}>Login</button>
+</div>
+
+<div class="logout">
+  <button type="submit" on:click={handleLogout}>Logout</button>
+</div>
+
+<h3> or </h3>
+<div class="signup">
+<h1>Signup</h1>
+<label for="email">Email</label>
+<input placeholder="Email" name="email" bind:value={newUser.email}>
+    
+<label for="password">Password</label>
+<input type="password" placeholder="password" name="password" bind:value={newUser.password}>
+<button type="submit" on:click={signup}>Sign Up</button>
+</div>
+
